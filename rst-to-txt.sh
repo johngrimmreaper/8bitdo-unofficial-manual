@@ -9,6 +9,11 @@ convert_file() {
     local src="$1"
     local dst="${src%.rst}.txt"
 
+    if [[ -e "$dst" ]]; then
+        printf 'skipped:   %s (already exists)\n' "$dst"
+        return 0
+    fi
+
     if have rst2txt; then
         rst2txt "$src" > "$dst"
     elif have pandoc; then
